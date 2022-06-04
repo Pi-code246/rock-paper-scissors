@@ -26,6 +26,9 @@
                 }
             }
             
+            playerScore = 0;
+            computerScore = 0;
+            
             function play() {
 
                 x = humanPlay();
@@ -36,15 +39,28 @@
 
                 if (x == y) { console.log('Tie'); }
 
-                else if ((x == 'rock' && y == 'scissors') || (x == 'paper' && y == 'rock') || (x == 'scissors' && y == 'paper')) {console.log('You won, ' + x + ' beats ' + y + '.') }
+                else if ((x == 'rock' && y == 'scissors') || (x == 'paper' && y == 'rock') || (x == 'scissors' && y == 'paper')) { console.log('You won, ' + x + ' beats ' + y + '.'); playerScore = ++playerScore }
 
-                else { console.log('You lost, ' + y + ' beats ' + x + '.') }
+                else { console.log('You lost, ' + y + ' beats ' + x + '.'); computerScore = ++computerScore }
 
-                playAgain();
             }
 
-            play();
 
+            for (let i = 0; i < 5; i++) {
+                play();
+            }
+
+            if (playerScore > computerScore) {
+                console.log(`FINAL SCORE: Your score: ${playerScore}. Computer score: ${computerScore}. YOU WON`);
+            } else {
+                console.log(`FINAL SCORE: Your score: ${playerScore}. Computer score: ${computerScore}. YOU LOST`);
+            }
+
+            playerScore = 0;
+            computerScore = 0;
+
+            playAgain();
+            
         </script>
     </body>
 </html>
