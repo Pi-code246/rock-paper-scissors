@@ -5,6 +5,46 @@
         <title>Rock paper scissors game</title>
     </head>
     <body>
-        
+        <script>
+            const items = ['rock','paper','scissors'];
+            
+            function humanPlay() {
+                pick = prompt('Pick rock, paper or scissors');
+                return pick.toLowerCase()
+            }
+            
+            function computerPlay() {
+                randomNumber = Math.floor( Math.random() * items.length);
+                return items[randomNumber];
+            }
+
+            function playAgain() {
+                if (confirm('Play again?') == true) {
+                    play();
+                } else {
+                    console.log('Thanks for game');
+                }
+            }
+            
+            function play() {
+
+                x = humanPlay();
+
+                y = computerPlay();
+
+                console.log('Computer picked ' + y + ' while you picked ' + x);
+
+                if (x == y) { console.log('Tie'); }
+
+                else if ((x == 'rock' && y == 'scissors') || (x == 'paper' && y == 'rock') || (x == 'scissors' && y == 'paper')) {console.log('You won, ' + x + ' beats ' + y + '.') }
+
+                else { console.log('You lost, ' + y + ' beats ' + x + '.') }
+
+                playAgain();
+            }
+
+            play();
+
+        </script>
     </body>
 </html>
