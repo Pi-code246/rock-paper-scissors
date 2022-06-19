@@ -5,14 +5,35 @@
         <title>Rock paper scissors game</title>
     </head>
     <body>
+
+        <button id="rock">Rock</button>
+        <button id="paper">Paper</button>
+        <button id="scissors">Scissors</button>
+
+        <div id="scoreBoard">
+
+        </div>
+
         <script>
             const items = ['rock','paper','scissors'];
             
-            function humanPlay() {
-                pick = prompt('Pick rock, paper or scissors');
-                return pick.toLowerCase()
-            }
+            // function humanPlay() {
+            //     pick = prompt('Pick rock, paper or scissors');
+            //     return pick.toLowerCase()
+            // }
             
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(button => button.addEventListener('click', () => { x = button.id; play(); button.style.border = '1px solid green' } ))
+
+            const scoreBoard = document.querySelector('#scoreBoard');
+
+            const picks = document.createElement('p');
+            
+            const finalResult = document.createElement('p');
+            
+            let roundScore;
+            let roundCount = 0;
+
             function computerPlay() {
                 randomNumber = Math.floor( Math.random() * items.length);
                 return items[randomNumber];
@@ -26,40 +47,50 @@
                 }
             }
             
-            playerScore = 0;
-            computerScore = 0;
+            let playerScore = 0;
+            let computerScore = 0;
             
             function play() {
+                
 
-                x = humanPlay();
+                // x = humanPlay();
 
                 y = computerPlay();
-
+                
+                
                 console.log('Computer picked ' + y + ' while you picked ' + x);
+                
+                if (x == y) { roundScore = 'Tie'; }
+                
+                else if ((x == 'rock' && y == 'scissors') || (x == 'paper' && y == 'rock') || (x == 'scissors' && y == 'paper')) { roundScore = 'You won, ' + x + ' beats ' + y + '.'; playerScore = ++playerScore; console.log(`this is the current player score: ${playerScore}`) }
+                
+                else { roundScore = 'You lost, ' + y + ' beats ' + x + '.'; computerScore = ++computerScore; console.log(`this is the current computer score: ${computerScore}`) }
+                
+                picks.textContent = `Computer picked ${y} while you picked ${x}. ${roundScore}`;
 
-                if (x == y) { console.log('Tie'); }
+                scoreBoard.appendChild(picks);
 
-                else if ((x == 'rock' && y == 'scissors') || (x == 'paper' && y == 'rock') || (x == 'scissors' && y == 'paper')) { console.log('You won, ' + x + ' beats ' + y + '.'); playerScore = ++playerScore }
+                roundCount = ++roundCount;
+                console.log(`this is the current round: ${roundCount}`)
 
-                else { console.log('You lost, ' + y + ' beats ' + x + '.'); computerScore = ++computerScore }
+                if (roundCount == 5) {
+                    if (playerScore > computerScore) {
+                        finalText = 'You won! Congratulations!'
+                    } else {
+                        finalText = 'You lost! Better luck next time!'
+                        }
 
+                    picks.textContent = `Game ends. FINAL SCORE: Your score: ${playerScore}. Computer score: ${computerScore}. ${finalText}`
+                    // scoreBoard.appendChild(finalResult)
+                    computerScore = 0;
+                    playerScore = 0;
+                    roundCount = 0;
+                }
             }
 
+            
 
-            for (let i = 0; i < 5; i++) {
-                play();
-            }
-
-            if (playerScore > computerScore) {
-                console.log(`FINAL SCORE: Your score: ${playerScore}. Computer score: ${computerScore}. YOU WON`);
-            } else {
-                console.log(`FINAL SCORE: Your score: ${playerScore}. Computer score: ${computerScore}. YOU LOST`);
-            }
-
-            playerScore = 0;
-            computerScore = 0;
-
-            playAgain();
+            
             
         </script>
     </body>
